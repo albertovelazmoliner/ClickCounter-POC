@@ -1,0 +1,17 @@
+{
+  "name": "gartner",
+  "version": "1.0.0",
+  "description": "Code Test Gartner",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "solution": "node index.js"
+  },
+  "author": "Alberto Velaz",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
+  }
+}
