@@ -38,7 +38,7 @@ const addToList = (element) => {
         clickInPreData.timestamp,
       ).getSeconds();
       const unixTimestampElement = new Date(element.timestamp).getSeconds();
-      if (unixTimestampElement < unixTimestampInPreData) {
+      if (unixTimestampElement > unixTimestampInPreData) {
         preData.set(key, element);
       }
     }
