@@ -5,6 +5,7 @@ const writeData = (data) => {
     if (err) {
       throw err;
     }
+    // eslint-disable-next-line no-console
     console.log('JSON data is saved.');
   });
 };
