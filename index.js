@@ -1,13 +1,27 @@
 const path = require('path');
+const Ajv = require('ajv');
 const { fileReaderSync } = require('./data/dataReader');
 const { writeData } = require('./data/dataWriter');
 const { FILE_DATA_CLICK, TIMESTAMP } = require('./common/constants');
+const Schema = require('./data/clickDataSchema');
 
+const ajv = new Ajv();
+const validateClickData = ajv.compile(Schema);
 const ipClickCounter = new Map();
 const preData = new Map();
 const fileDir = path.join(__dirname, FILE_DATA_CLICK);
 
 const readData = () => JSON.parse(fileReaderSync(fileDir));
+
+const clickIsValid = (click) => {
+  const valid = validateClickData(click);
+  if (!valid) {
+    // eslint-disable-next-line no-console
+    console.log(validateClickData.errors);
+    return false;
+  }
+  return true;
+};
 
 const counterControl = (click) => {
   if (ipClickCounter.has(click.ip)) {
@@ -71,8 +85,10 @@ const cleanRepeatedMoreThan10Times = (arrayData) => {
 
 const processData = (rawData) => {
   rawData.forEach((element) => {
-    counterControl(element);
-    addToList(element);
+    if (clickIsValid(element)) {
+      counterControl(element);
+      addToList(element);
+    }
   });
 
   const arrayData = preDataToArray();
