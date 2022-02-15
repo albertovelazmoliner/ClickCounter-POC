@@ -4,20 +4,22 @@ const { writeData } = require('./data/dataWriter');
 const { clickIsValid } = require('./utlis/dataValidator');
 const { FILE_DATA_CLICK } = require('./common/constants');
 const { getClickDay, getClickPeriod } = require('./utlis/utils');
+const IPController = require('./utlis/IPController');
 
-const ipClickCounter = new Map();
+// const ipClickCounter = new Map();
 const preData = new Map();
 const fileDir = path.join(__dirname, FILE_DATA_CLICK);
+const ipController = new IPController();
 
 const readData = () => JSON.parse(fileReaderSync(fileDir));
 
-const counterControl = (click) => {
-  if (ipClickCounter.has(click.ip)) {
-    ipClickCounter.set(click.ip, ipClickCounter.get(click.ip) + 1);
-  } else {
-    ipClickCounter.set(click.ip, 1);
-  }
-};
+// const counterControl = (click) => {
+//   if (ipClickCounter.has(click.ip)) {
+//     ipClickCounter.set(click.ip, ipClickCounter.get(click.ip) + 1);
+//   } else {
+//     ipClickCounter.set(click.ip, 1);
+//   }
+// };
 
 const addToList = (element) => {
   const clickPeriod = getClickPeriod(element.timestamp);
@@ -47,18 +49,18 @@ const preDataToArray = () => {
   return arrayData;
 };
 
-const getIPsRepeatedMoreThan10Times = () => {
-  const ips = [];
-  ipClickCounter.forEach((value, key) => {
-    if (value > 10) {
-      ips.push(key);
-    }
-  });
-  return ips;
-};
+// const getIPsRepeatedMoreThan10Times = () => {
+//   const ips = [];
+//   ipClickCounter.forEach((value, key) => {
+//     if (value > 10) {
+//       ips.push(key);
+//     }
+//   });
+//   return ips;
+// };
 
 const cleanRepeatedMoreThan10Times = (arrayData) => {
-  const bannedIPs = getIPsRepeatedMoreThan10Times();
+  const bannedIPs = ipController.getBannedIPs();
   const result = arrayData.filter((element) => !bannedIPs.includes(element.ip));
   return result;
 };
@@ -67,7 +69,7 @@ const processData = () => {
   const data = readData();
   data.forEach((element) => {
     if (clickIsValid(element)) {
-      counterControl(element);
+      ipController.counterControl(element);
       addToList(element);
     }
   });
