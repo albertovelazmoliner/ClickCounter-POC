@@ -1,5 +1,5 @@
 const path = require('path');
-const { fileReaderSync } = require('./data/dataReader');
+const { fileReader, fileReaderSync } = require('./data/dataReader');
 const { writeData } = require('./data/dataWriter');
 const { clickIsValid } = require('./utlis/dataValidator');
 const { FILE_DATA_CLICK } = require('./common/constants');
@@ -34,8 +34,7 @@ const addToList = (element) => {
   }
 };
 
-const processData = () => {
-  const data = readData();
+const mainProcess = (data) => {
   data.forEach((element) => {
     if (clickIsValid(element)) {
       ipController.counterControl(element);
@@ -49,4 +48,18 @@ const processData = () => {
   writeData(result);
 };
 
-module.exports = processData;
+const processDataSync = () => {
+  const data = readData();
+  mainProcess(data);
+};
+
+const processData = () => {
+  fileReader(fileDir, (data) => {
+    mainProcess(data);
+  });
+};
+
+module.exports = {
+  processData,
+  processDataSync,
+};
