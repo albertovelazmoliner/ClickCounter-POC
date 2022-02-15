@@ -32,7 +32,7 @@ const addToList = (element) => {
   }
 };
 
-const mainProcess = (data) => {
+const dataProcessor = (data) => {
   data.forEach((element) => {
     if (clickIsValid(element)) {
       ipController.counterControl(element);
@@ -48,12 +48,12 @@ const mainProcess = (data) => {
 
 const processDataSync = () => {
   const data = fileReaderSync(fileDir);
-  mainProcess(data);
+  dataProcessor(data);
 };
 
 const processData = () => {
   fileReader(fileDir, (data) => {
-    mainProcess(data);
+    dataProcessor(data);
   });
 };
 
