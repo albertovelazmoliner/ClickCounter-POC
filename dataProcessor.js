@@ -3,7 +3,7 @@ const { fileReaderSync } = require('./data/dataReader');
 const { writeData } = require('./data/dataWriter');
 const { clickIsValid } = require('./utlis/dataValidator');
 const { FILE_DATA_CLICK } = require('./common/constants');
-const { getClickDay, getClickPeriod } = require('./utlis/utils');
+const { clickDataToArray, getClickDay, getClickPeriod } = require('./utlis/utils');
 const IPController = require('./utlis/IPController');
 
 const preData = new Map();
@@ -34,12 +34,6 @@ const addToList = (element) => {
   }
 };
 
-const preDataToArray = () => {
-  // eslint-disable-next-line no-unused-vars
-  const arrayData = Array.from(preData, ([_, value]) => value);
-  return arrayData;
-};
-
 const cleanRepeatedMoreThan10Times = (arrayData) => {
   const bannedIPs = ipController.getBannedIPs();
   const result = arrayData.filter((element) => !bannedIPs.includes(element.ip));
@@ -55,7 +49,7 @@ const processData = () => {
     }
   });
 
-  const arrayData = preDataToArray();
+  const arrayData = clickDataToArray(preData);
   const result = cleanRepeatedMoreThan10Times(arrayData);
 
   writeData(result);
