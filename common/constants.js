@@ -8,9 +8,11 @@ const TIMESTAMP = {
   PERIOD_CORRECTION: 1,
 };
 const KEY_IP = 0;
+const LIMIT_IP_NUMBER = 10;
 
 module.exports = {
   FILE_DATA_CLICK,
-  TIMESTAMP,
   KEY_IP,
+  LIMIT_IP_NUMBER,
+  TIMESTAMP,
 };
