@@ -1,3 +1,5 @@
+const { LIMIT_IP_NUMBER } = require('../common/constants');
+
 class IPController {
   constructor() {
     this.ipClickCounter = new Map();
@@ -18,7 +20,7 @@ class IPController {
   getBannedIPs = () => {
     const ips = [];
     this.ipClickCounter.forEach((value, key) => {
-      if (value > 10) {
+      if (value > LIMIT_IP_NUMBER) {
         ips.push(key);
       }
     });
