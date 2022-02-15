@@ -2,6 +2,9 @@ const fs = require('fs');
 
 async function reader(pathToFile, callback) {
   fs.readFile(pathToFile, (err, data) => {
+    if (err) {
+      throw err;
+    }
     const bufferString = data.toString();
     const fileData = JSON.parse(bufferString);
     callback(fileData);
@@ -11,8 +14,9 @@ async function reader(pathToFile, callback) {
 const fileReader = async (pathToFile, callback) => reader(pathToFile, callback);
 
 const fileReaderSync = (pathToFile) => {
-  const result = fs.readFileSync(pathToFile, 'utf8');
-  return result;
+  const data = fs.readFileSync(pathToFile, 'utf8');
+  const readData = JSON.parse(data);
+  return readData;
 };
 
 module.exports = {
