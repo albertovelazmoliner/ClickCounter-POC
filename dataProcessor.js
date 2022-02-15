@@ -6,20 +6,11 @@ const { FILE_DATA_CLICK } = require('./common/constants');
 const { getClickDay, getClickPeriod } = require('./utlis/utils');
 const IPController = require('./utlis/IPController');
 
-// const ipClickCounter = new Map();
 const preData = new Map();
 const fileDir = path.join(__dirname, FILE_DATA_CLICK);
 const ipController = new IPController();
 
 const readData = () => JSON.parse(fileReaderSync(fileDir));
-
-// const counterControl = (click) => {
-//   if (ipClickCounter.has(click.ip)) {
-//     ipClickCounter.set(click.ip, ipClickCounter.get(click.ip) + 1);
-//   } else {
-//     ipClickCounter.set(click.ip, 1);
-//   }
-// };
 
 const addToList = (element) => {
   const clickPeriod = getClickPeriod(element.timestamp);
@@ -48,16 +39,6 @@ const preDataToArray = () => {
   const arrayData = Array.from(preData, ([_, value]) => value);
   return arrayData;
 };
-
-// const getIPsRepeatedMoreThan10Times = () => {
-//   const ips = [];
-//   ipClickCounter.forEach((value, key) => {
-//     if (value > 10) {
-//       ips.push(key);
-//     }
-//   });
-//   return ips;
-// };
 
 const cleanRepeatedMoreThan10Times = (arrayData) => {
   const bannedIPs = ipController.getBannedIPs();
