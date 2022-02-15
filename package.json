@@ -4,15 +4,16 @@
   "description": "Code Test Gartner",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "solution": "node index.js"
   },
   "author": "Alberto Velaz",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^8.9.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4"
+    "eslint": "8.9.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.25.4",
+    "jest": "27.5.1"
   },
   "dependencies": {
     "ajv": "8.10.0"
