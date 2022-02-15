@@ -2,7 +2,8 @@ const path = require('path');
 const { fileReaderSync } = require('./data/dataReader');
 const { writeData } = require('./data/dataWriter');
 const { clickIsValid } = require('./utlis/dataValidator');
-const { FILE_DATA_CLICK, TIMESTAMP } = require('./common/constants');
+const { FILE_DATA_CLICK } = require('./common/constants');
+const { getClickDay, getClickPeriod } = require('./utlis/utils');
 
 const ipClickCounter = new Map();
 const preData = new Map();
@@ -17,14 +18,6 @@ const counterControl = (click) => {
     ipClickCounter.set(click.ip, 1);
   }
 };
-
-const getClickPeriod = (clickTimeStamp) => {
-  const timeData = clickTimeStamp.split(' ')[TIMESTAMP.TIME];
-  const period = parseInt(timeData.split(':')[TIMESTAMP.HOUR], 10);
-  return period + TIMESTAMP.PERIOD_CORRECTION;
-};
-
-const getClickDay = (clickTimeStamp) => clickTimeStamp.split(' ')[TIMESTAMP.DAY];
 
 const addToList = (element) => {
   const clickPeriod = getClickPeriod(element.timestamp);
