@@ -6,11 +6,9 @@ const { FILE_DATA_CLICK } = require('./common/constants');
 const { clickDataToArray, getClickDay, getClickPeriod } = require('./utlis/utils');
 const IPController = require('./utlis/IPController');
 
-const preData = new Map();
 const fileDir = path.join(__dirname, FILE_DATA_CLICK);
+const preData = new Map();
 const ipController = new IPController();
-
-const readData = () => JSON.parse(fileReaderSync(fileDir));
 
 const addToList = (element) => {
   const clickPeriod = getClickPeriod(element.timestamp);
@@ -49,7 +47,7 @@ const mainProcess = (data) => {
 };
 
 const processDataSync = () => {
-  const data = readData();
+  const data = fileReaderSync(fileDir);
   mainProcess(data);
 };
 
