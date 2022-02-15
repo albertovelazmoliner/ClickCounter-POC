@@ -1,9 +1,12 @@
-const { CLICK_DATE_REGEX } = require('../common/constants');
+const { CLICK_DATE_REGEX, IPV4_IPV6_REGEX } = require('../common/constants');
 
 const schema = {
   type: 'object',
   properties: {
-    ip: { type: 'string' },
+    ip: {
+      type: 'string',
+      pattern: IPV4_IPV6_REGEX,
+    },
     timestamp: {
       type: 'string',
       pattern: CLICK_DATE_REGEX,
