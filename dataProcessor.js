@@ -34,12 +34,6 @@ const addToList = (element) => {
   }
 };
 
-const cleanRepeatedMoreThan10Times = (arrayData) => {
-  const bannedIPs = ipController.getBannedIPs();
-  const result = arrayData.filter((element) => !bannedIPs.includes(element.ip));
-  return result;
-};
-
 const processData = () => {
   const data = readData();
   data.forEach((element) => {
@@ -50,7 +44,7 @@ const processData = () => {
   });
 
   const arrayData = clickDataToArray(preData);
-  const result = cleanRepeatedMoreThan10Times(arrayData);
+  const result = ipController.cleanRepeatedMoreThan10Times(arrayData);
 
   writeData(result);
 };
