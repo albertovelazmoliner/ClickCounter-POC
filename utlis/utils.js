@@ -8,7 +8,14 @@ const getClickPeriod = (clickTimeStamp) => {
 
 const getClickDay = (clickTimeStamp) => clickTimeStamp.split(' ')[TIMESTAMP.DAY];
 
+const clickDataToArray = (data) => {
+  // eslint-disable-next-line no-unused-vars
+  const arrayData = Array.from(data, ([_, value]) => value);
+  return arrayData;
+};
+
 module.exports = {
+  clickDataToArray,
   getClickPeriod,
   getClickDay,
 };
