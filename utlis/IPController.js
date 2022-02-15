@@ -24,6 +24,12 @@ class IPController {
     });
     return ips;
   };
+
+  cleanRepeatedMoreThan10Times = (arrayData) => {
+    const bannedIPs = this.getBannedIPs();
+    const result = arrayData.filter((element) => !bannedIPs.includes(element.ip));
+    return result;
+  };
 }
 
 module.exports = IPController;
