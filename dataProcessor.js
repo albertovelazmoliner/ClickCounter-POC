@@ -1,9 +1,13 @@
 const path = require('path');
-const { fileReader, fileReaderSync } = require('./data/dataReader');
+const { fileReader } = require('./data/dataReader');
 const { writeData } = require('./data/dataWriter');
 const { clickIsValid } = require('./utlis/dataValidator');
 const { FILE_DATA_CLICK } = require('./common/constants');
-const { clickDataToArray, getClickDay, getClickPeriod } = require('./utlis/utils');
+const {
+  clickDataToArray,
+  getClickDay,
+  getClickPeriod,
+} = require('./utlis/utils');
 const IPController = require('./utlis/IPController');
 
 const fileDir = path.join(__dirname, FILE_DATA_CLICK);
@@ -43,21 +47,15 @@ const dataProcessor = (data) => {
   const arrayData = clickDataToArray(preData);
   const result = ipController.cleanRepeatedMoreThan10Times(arrayData);
 
-  writeData(result);
+  return result;
 };
 
-const processDataSync = () => {
-  const data = fileReaderSync(fileDir);
-  dataProcessor(data);
-};
-
-const processData = () => {
-  fileReader(fileDir, (data) => {
-    dataProcessor(data);
-  });
+const processData = async () => {
+  const data = await fileReader(fileDir);
+  const result = dataProcessor(data);
+  await writeData(result);
 };
 
 module.exports = {
   processData,
-  processDataSync,
 };
