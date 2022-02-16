@@ -12,7 +12,6 @@ const IPController = require('./utlis/IPController');
 
 const fileDir = path.join(__dirname, FILE_DATA_CLICK);
 const preData = new Map();
-const ipController = new IPController();
 
 const addToList = (element) => {
   const clickPeriod = getClickPeriod(element.timestamp);
@@ -36,7 +35,7 @@ const addToList = (element) => {
   }
 };
 
-const dataProcessor = (data) => {
+const dataProcessor = (data, ipController) => {
   data.forEach((element) => {
     if (clickIsValid(element)) {
       ipController.counterControl(element);
@@ -51,8 +50,10 @@ const dataProcessor = (data) => {
 };
 
 const processData = async () => {
+  preData.clear();
+  const ipController = new IPController();
   const data = await fileReader(fileDir);
-  const result = dataProcessor(data);
+  const result = dataProcessor(data, ipController);
   await writeData(result);
 };
 
