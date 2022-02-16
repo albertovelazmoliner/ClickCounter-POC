@@ -6,7 +6,8 @@ const { processData } = require('../lib/dataProcessor');
 
 describe('[Data Processor tests]', () => {
   const originalConsoleLog = console.log;
-  before(() => {
+  before(async () => {
+    await fsp.rm('result​set.json');
     console.log = () => {};
   });
   afterEach(async () => {
