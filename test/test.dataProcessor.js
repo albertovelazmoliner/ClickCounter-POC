@@ -52,9 +52,7 @@ describe('[Data Processor tests]', () => {
     const firstClickOn55_55_55_55_at_13_02_40 = jsonOriginalClicksList[19];
     const firstClickOn55_55_55_55_at_13_33_34 = jsonOriginalClicksList[21];
     const firstClickOn55_55_55_55_at_13_42_32 = jsonOriginalClicksList[22];
-    console.log(firstClickOn55_55_55_55_at_13_02_40);
-    console.log(firstClickOn55_55_55_55_at_13_33_34);
-    console.log(firstClickOn55_55_55_55_at_13_42_32);
+    
     await processData();
     const data = await fsp.readFile('result​set.json', { encoding: 'utf-8' });
     const jsonData = JSON.parse(data);
@@ -69,17 +67,17 @@ describe('[Data Processor tests]', () => {
         && element.timestamp === firstClickOn55_55_55_55_at_13_33_34.timestamp
         && element.amount === firstClickOn55_55_55_55_at_13_33_34.amount,
     );
-    
+
     const find_firstClickOn55_55_55_55_at_13_42_32 = jsonData.find(
       (element) => element.ip === firstClickOn55_55_55_55_at_13_42_32.ip
         && element.timestamp === firstClickOn55_55_55_55_at_13_42_32.timestamp
         && element.amount === firstClickOn55_55_55_55_at_13_42_32.amount,
     );
-    
+
     expect(firstClickOn55_55_55_55_at_13_02_40.amount).to.equal(firstClickOn55_55_55_55_at_13_33_34.amount);
     expect(firstClickOn55_55_55_55_at_13_02_40.amount).to.equal(firstClickOn55_55_55_55_at_13_42_32.amount);
     expect(firstClickOn55_55_55_55_at_13_33_34.amount).to.equal(firstClickOn55_55_55_55_at_13_42_32.amount);
-    
+
     expect(find_firstClickOn55_55_55_55_at_13_02_40)
       .to.be.deep.equal(firstClickOn55_55_55_55_at_13_02_40);
     expect(find_firstClickOn55_55_55_55_at_13_33_34).to.equal(undefined);
