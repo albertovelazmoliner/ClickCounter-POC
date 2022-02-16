@@ -4,25 +4,29 @@ const fsp = require('fs').promises;
 const { processData } = require('../dataProcessor');
 
 describe('[Data Processor tests]', () => {
+  before(() => {
+    console.log = () => {};
+  });
+
   afterEach(async () => {
     await fsp.rm('result​set.json');
   });
 
-  it('[DPT] - processData writes a new file', async () => {
+  it('[DPT - 01] - processData writes a new file', async () => {
     await processData();
     const data = await fsp.readFile('result​set.json', { encoding: 'utf-8' });
     const jsonData = JSON.parse(data);
     expect(jsonData).to.be.an('array');
   });
 
-  it('[DPT] - processData remove repeated ips more than 10 times, so IP "22.22.22.22" is not present in result', async () => {
+  it('[DPT - 02] - processData remove repeated ips more than 10 times, so IP "22.22.22.22" is not present in result', async () => {
     await processData();
     const data = await fsp.readFile('result​set.json', { encoding: 'utf-8' });
     const jsonData = JSON.parse(data);
     expect(jsonData.filter((element) => element.ip === '22.22.22.22').length).to.equal(0);
   });
 
-  it('[DPT] - For each IP within each one hour period, only the most expensive click is placed into the result set. Check "11.11.11.11" in period 3', async () => {
+  it('[DPT - 03] - For each IP within each one hour period, only the most expensive click is placed into the result set. Check "11.11.11.11" in period 3', async () => {
     const originalClicksList = await fsp.readFile('./data/clicks.json', { encoding: 'utf-8' });
     const jsonOriginalClicksList = JSON.parse(originalClicksList);
     const firstClickOn11_11_11_11_at_2_12_32 = jsonOriginalClicksList[1];
@@ -46,7 +50,7 @@ describe('[Data Processor tests]', () => {
       .to.be.deep.equal(firstClickOn11_11_11_11_at_2_13_11);
   });
 
-  it('[DPT] - If more than one click from the same IP ties for the most expensive click in a one hour period, only place the earliest click into the result set. Check "55.55.55.55" in period 14', async () => {
+  it('[DPT - 04] - If more than one click from the same IP ties for the most expensive click in a one hour period, only place the earliest click into the result set. Check "55.55.55.55" in period 14', async () => {
     const originalClicksList = await fsp.readFile('./data/clicks.json', { encoding: 'utf-8' });
     const jsonOriginalClicksList = JSON.parse(originalClicksList);
     const firstClickOn55_55_55_55_at_13_02_40 = jsonOriginalClicksList[19];
