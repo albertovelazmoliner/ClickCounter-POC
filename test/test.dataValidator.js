@@ -8,9 +8,13 @@ const NOT_VALID_CLICK_DATA_BAD_AMOUNT_1 = { "ip":"355.55.55.55", "timestamp":"3/
 const NOT_VALID_CLICK_DATA_BAD_AMOUNT_2 = { "ip":"355.55.55.55", "timestamp":"3/11/2020 14:03:04", "amount": "5.25" };
 
 describe('[Data Validator utility tests]', () => {
+    const originalConsoleLog = console.log;
     before(() => {
         console.log = () => {};
     });
+    after(() => {
+        console.log = originalConsoleLog;
+      });
     it('[DVT - 01] - clickIsValid with valid click data return true', () => {
         expect(clickIsValid(VALID_CLICK_DATA)).to.equal(true);
     });
