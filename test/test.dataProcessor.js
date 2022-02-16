@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 const { expect } = require('chai');
 const fsp = require('fs').promises;
-const { processData } = require('../dataProcessor');
+const { FILE_MOCK_DATA } = require('../common/constants');
+const { processData } = require('../lib/dataProcessor');
 
 describe('[Data Processor tests]', () => {
   const originalConsoleLog = console.log;
@@ -16,25 +17,25 @@ describe('[Data Processor tests]', () => {
   });
 
   it('[DPT - 01] - processData writes a new file', async () => {
-    await processData();
+    await processData(FILE_MOCK_DATA);
     const data = await fsp.readFile('result​set.json', { encoding: 'utf-8' });
     const jsonData = JSON.parse(data);
     expect(jsonData).to.be.an('array');
   });
 
   it('[DPT - 02] - processData remove repeated ips more than 10 times, so IP "22.22.22.22" is not present in result', async () => {
-    await processData();
+    await processData(FILE_MOCK_DATA);
     const data = await fsp.readFile('result​set.json', { encoding: 'utf-8' });
     const jsonData = JSON.parse(data);
     expect(jsonData.filter((element) => element.ip === '22.22.22.22').length).to.equal(0);
   });
 
   it('[DPT - 03] - For each IP within each one hour period, only the most expensive click is placed into the result set. Check "11.11.11.11" in period 3', async () => {
-    const originalClicksList = await fsp.readFile('./data/clicks.json', { encoding: 'utf-8' });
+    const originalClicksList = await fsp.readFile('./mockData/clicks.json', { encoding: 'utf-8' });
     const jsonOriginalClicksList = JSON.parse(originalClicksList);
     const firstClickOn11_11_11_11_at_2_12_32 = jsonOriginalClicksList[1];
     const firstClickOn11_11_11_11_at_2_13_11 = jsonOriginalClicksList[2];
-    await processData();
+    await processData(FILE_MOCK_DATA);
     const data = await fsp.readFile('result​set.json', { encoding: 'utf-8' });
     const jsonData = JSON.parse(data);
     const find_firstClickOn11_11_11_11_at_2_12_32 = jsonData.find(
@@ -54,13 +55,13 @@ describe('[Data Processor tests]', () => {
   });
 
   it('[DPT - 04] - If more than one click from the same IP ties for the most expensive click in a one hour period, only place the earliest click into the result set. Check "55.55.55.55" in period 14', async () => {
-    const originalClicksList = await fsp.readFile('./data/clicks.json', { encoding: 'utf-8' });
+    const originalClicksList = await fsp.readFile('./mockData/clicks.json', { encoding: 'utf-8' });
     const jsonOriginalClicksList = JSON.parse(originalClicksList);
     const firstClickOn55_55_55_55_at_13_02_40 = jsonOriginalClicksList[19];
     const firstClickOn55_55_55_55_at_13_33_34 = jsonOriginalClicksList[21];
     const firstClickOn55_55_55_55_at_13_42_32 = jsonOriginalClicksList[22];
     
-    await processData();
+    await processData(FILE_MOCK_DATA);
     const data = await fsp.readFile('result​set.json', { encoding: 'utf-8' });
     const jsonData = JSON.parse(data);
     const find_firstClickOn55_55_55_55_at_13_02_40 = jsonData.find(
