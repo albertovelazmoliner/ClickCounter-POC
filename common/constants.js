@@ -1,4 +1,4 @@
-const FILE_DATA_CLICK = '/data/clicks.json';
+const FILE_MOCK_DATA = '../mockData/clicks.json';
 const TIMESTAMP = {
   DAY: 0,
   TIME: 1,
@@ -14,7 +14,7 @@ const IPV4_IPV6_REGEX = '((^\\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5
 
 module.exports = {
   CLICK_DATE_REGEX,
-  FILE_DATA_CLICK,
+  FILE_MOCK_DATA,
   IPV4_IPV6_REGEX,
   KEY_IP,
   LIMIT_IP_NUMBER,
