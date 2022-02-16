@@ -4,12 +4,15 @@ const fsp = require('fs').promises;
 const { processData } = require('../dataProcessor');
 
 describe('[Data Processor tests]', () => {
+  const originalConsoleLog = console.log;
   before(() => {
     console.log = () => {};
   });
-
   afterEach(async () => {
     await fsp.rm('result​set.json');
+  });
+  after(() => {
+    console.log = originalConsoleLog;
   });
 
   it('[DPT - 01] - processData writes a new file', async () => {
