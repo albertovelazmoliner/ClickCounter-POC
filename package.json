@@ -4,7 +4,7 @@
   "description": "Code Test Gartner",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "mocha",
     "solution": "node index.js"
   },
   "author": "Alberto Velaz",
@@ -12,10 +12,11 @@
   "devDependencies": {
     "eslint": "8.9.0",
     "eslint-config-airbnb-base": "15.0.0",
-    "eslint-plugin-import": "2.25.4",
-    "jest": "27.5.1"
+    "eslint-plugin-import": "2.25.4"
   },
   "dependencies": {
-    "ajv": "8.10.0"
+    "ajv": "8.10.0",
+    "chai": "4.3.6",
+    "mocha": "9.2.0"
   }
 }
