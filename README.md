@@ -1,5 +1,5 @@
-# Gartner
-Gartner POC
+# ClicksCounter POC
+ClicksCounter POC
 
 Just run:
 - `npm install`
